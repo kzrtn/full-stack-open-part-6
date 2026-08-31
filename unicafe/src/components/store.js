@@ -19,7 +19,7 @@ const useCounterStore = create(set => ({
   actions: {
     addGood: () => set(state => ({ display: calculateDisplay({ ...state.display, good: state.display.good + 1 })})),
     addNeutral: () => set(state => ({ display: calculateDisplay({ ...state.display, neutral: state.display.neutral + 1 })})),
-    addBad: () => set(state => ({ display: calculateDisplay({ ...state.display, neutral: state.display.bad + 1 })}))
+    addBad: () => set(state => ({ display: calculateDisplay({ ...state.display, bad: state.display.bad + 1 })}))
   }
 }))
 
