@@ -19,8 +19,15 @@ const asObject = anecdote => ({
 })
 
 const useAnecdoteStore = create((set) => ({
-  anecdotes: anecdotesAtStart.map(asObject),
-  actions: {},
+  anecdotes: anecdotesAtStart.map(asObject), //it didn't need to pass in the variable through the function there?
+  actions: {
+    vote: id => set(state => ({
+      anecdotes: (state.anecdotes.map(
+        a => a.id === id ? { ...a, votes: a.votes + 1 } : a
+      ))
+    }))
+  },
 }))
 
 export const useAnecdotes = () => useAnecdoteStore((state) => state.anecdotes)
+export const useAnecdotesActions = () => useAnecdoteStore((state) => state.actions)
