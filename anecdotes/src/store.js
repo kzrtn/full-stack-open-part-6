@@ -12,6 +12,8 @@ const anecdotesAtStart = [
 
 const getId = () => (100000 * Math.random()).toFixed(0)
 
+const sortByVotes = (arr) => arr.toSorted((a, b) => b.votes - a.votes)
+
 const asObject = anecdote => ({
   content: anecdote,
   id: getId(),
@@ -19,14 +21,14 @@ const asObject = anecdote => ({
 })
 
 const useAnecdoteStore = create((set) => ({
-  anecdotes: anecdotesAtStart.map(asObject), //it didn't need to pass in the variable through the function there?
+  anecdotes: sortByVotes(anecdotesAtStart.map(asObject)), //it didn't need to pass in the variable through the function there?
   actions: {
     vote: id => set(state => ({
-      anecdotes: (state.anecdotes.map(
+      anecdotes: sortByVotes((state.anecdotes.map(
         a => a.id === id ? { ...a, votes: a.votes + 1 } : a
-      ))
+      )))
     })),
-    add: anecdote => set(state => ({ anecdotes: [...state.anecdotes, asObject(anecdote)]}))
+    add: anecdote => set(state => ({ anecdotes: sortByVotes([...state.anecdotes, asObject(anecdote)])}))
   },
 }))
 
