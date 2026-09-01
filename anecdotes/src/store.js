@@ -1,4 +1,4 @@
-
+import { useShallow } from 'zustand/react/shallow'
 import { create } from 'zustand'
 
 const anecdotesAtStart = [
@@ -13,6 +13,11 @@ const anecdotesAtStart = [
 const getId = () => (100000 * Math.random()).toFixed(0)
 
 const sortByVotes = (arr) => arr.toSorted((a, b) => b.votes - a.votes)
+const filterResult = (arr, filter) => arr.filter(
+  a => filter
+  ? a.content.toUpperCase().includes(filter.toUpperCase())
+  : true
+) 
 
 const asObject = anecdote => ({
   content: anecdote,
@@ -21,16 +26,19 @@ const asObject = anecdote => ({
 })
 
 const useAnecdoteStore = create((set) => ({
-  anecdotes: sortByVotes(anecdotesAtStart.map(asObject)), //it didn't need to pass in the variable through the function there?
+  anecdotes: anecdotesAtStart.map(asObject),
+  filter: '',
   actions: {
     vote: id => set(state => ({
-      anecdotes: sortByVotes((state.anecdotes.map(
+      anecdotes: (state.anecdotes.map(
         a => a.id === id ? { ...a, votes: a.votes + 1 } : a
-      )))
+      ))
     })),
-    add: anecdote => set(state => ({ anecdotes: sortByVotes([...state.anecdotes, asObject(anecdote)])}))
-  },
+    add: anecdote => set(state => ({ anecdotes: [...state.anecdotes, asObject(anecdote)]})),
+    setFilter: value => set(() => ({ filter: value }))
+  }
 }))
 
-export const useAnecdotes = () => useAnecdoteStore((state) => state.anecdotes)
+export const useAnecdotes = () => useAnecdoteStore(useShallow((state) => filterResult(sortByVotes(state.anecdotes), state.filter)))
 export const useAnecdotesActions = () => useAnecdoteStore((state) => state.actions)
+export const useFilter = () => useAnecdoteStore(state => state.filter)
