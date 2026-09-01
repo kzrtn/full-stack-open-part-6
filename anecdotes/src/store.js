@@ -9,6 +9,11 @@ const filterResult = (arr, filter) => arr.filter(
   : true
 ) 
 
+const asObject = anecdote => ({
+  content: anecdote,
+  votes: 0
+})
+
 const useAnecdoteStore = create((set) => ({
   anecdotes: [],
   filter: '',
@@ -18,7 +23,10 @@ const useAnecdoteStore = create((set) => ({
         a => a.id === id ? { ...a, votes: a.votes + 1 } : a
       ))
     })),
-    add: anecdote => set(state => ({ anecdotes: [...state.anecdotes, asObject(anecdote)]})),
+    add: async content => {
+      const anecdote = await anecdoteService.create(content)
+      set(state => ({ anecdotes: [...state.anecdotes, anecdote]}))
+    },
     setFilter: value => set(() => ({ filter: value })),
     init: async () => {
       const anecdotes = await anecdoteService.getAll()

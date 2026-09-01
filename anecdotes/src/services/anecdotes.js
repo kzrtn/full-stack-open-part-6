@@ -6,4 +6,16 @@ const getAll = async () => {
   return await res.json()
 }
 
-export default { getAll }
+const create = async (content) => {
+  const res = await fetch(baseUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ content, votes: 0 })
+  })
+  if(!res.ok) throw new Error(`Response status: ${res.status}`)
+  return await res.json()
+}
+
+export default { getAll, create }
