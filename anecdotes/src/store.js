@@ -7,22 +7,19 @@ const filterResult = (arr, filter) => arr.filter(
   a => filter
   ? a.content.toUpperCase().includes(filter.toUpperCase())
   : true
-) 
+)
 
-const asObject = anecdote => ({
-  content: anecdote,
-  votes: 0
-})
-
-const useAnecdoteStore = create((set) => ({
+const useAnecdoteStore = create((set, get) => ({
   anecdotes: [],
   filter: '',
   actions: {
-    vote: id => set(state => ({
-      anecdotes: (state.anecdotes.map(
-        a => a.id === id ? { ...a, votes: a.votes + 1 } : a
-      ))
-    })),
+    vote: async id => {
+      const anecdote = get().anecdotes.find(a => a.id === id)
+      const updated = await anecdoteService.update(id, { ...anecdote, votes: anecdote.votes + 1 })
+      set(state => ({
+        anecdotes: (state.anecdotes.map(a => a.id === id ? updated : a))
+      }))
+    },
     add: async content => {
       const anecdote = await anecdoteService.create(content)
       set(state => ({ anecdotes: [...state.anecdotes, anecdote]}))

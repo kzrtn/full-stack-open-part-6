@@ -2,7 +2,7 @@ import { useAnecdotesActions } from '../store'
 
 const Anecdote = ({anecdote}) => {
   const { vote } = useAnecdotesActions()
-  
+
   return (
     <>
       <div>{anecdote.content}</div>

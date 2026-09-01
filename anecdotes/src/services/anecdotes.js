@@ -18,4 +18,15 @@ const create = async (content) => {
   return await res.json()
 }
 
-export default { getAll, create }
+const update = async (id, anecdote) => {
+  const res = await fetch(`${baseUrl}/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(anecdote)
+  })
+  return await res.json()
+}
+
+export default { getAll, create, update }
