@@ -13,5 +13,10 @@
   "devDependencies": {
     "@playwright/test": "^1.55.0",
     "json-server": "^1.0.0-beta.15"
+  },
+  "dependencies": {
+    "chromium": "^3.0.3",
+    "install": "^0.13.0",
+    "playwright": "^1.62.1"
   }
 }
