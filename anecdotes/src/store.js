@@ -44,7 +44,7 @@ const useNotificationStore = create((set) => ({
   },
   setNotification: value => {
     set(() => ({ notification: value }))
-    setTimeout(() => set(() => ({ notification: { content: '', type: '' } })), 5000)
+    setTimeout(() => set(() => ({ notification: { content: '', type: '' } })), 3000)
   }
 }))
 

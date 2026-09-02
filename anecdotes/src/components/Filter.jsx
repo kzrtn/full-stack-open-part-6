@@ -11,7 +11,7 @@ const Filter = () => {
   return (
     <div style={style}>
       filter
-      <input
+      <input data-testid='filter'
         onChange={({target}) => setFilter(target.value)}
         value={filter}
       />
