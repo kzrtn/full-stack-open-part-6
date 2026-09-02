@@ -1,6 +1,7 @@
 import { useShallow } from 'zustand/react/shallow'
 import { create } from 'zustand'
 import anecdoteService from './services/anecdotes'
+import anecdotes from './services/anecdotes'
 
 const sortByVotes = (arr) => arr.toSorted((a, b) => b.votes - a.votes)
 const filterResult = (arr, filter) => arr.filter(
@@ -28,6 +29,10 @@ const useAnecdoteStore = create((set, get) => ({
     init: async () => {
       const anecdotes = await anecdoteService.getAll()
       set(()=> ({ anecdotes }))
+    },
+    remove: async id => {
+      await anecdoteService.remove(id)
+      set(state => ({ anecdotes: (state.anecdotes.filter(a => a.id !== id)) }))
     }
   }
 }))
