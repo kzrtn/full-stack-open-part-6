@@ -32,6 +32,19 @@ const useAnecdoteStore = create((set, get) => ({
   }
 }))
 
+const useNotificationStore = create((set) => ({
+  notification: {
+    content: '',
+    type: ''
+  },
+  setNotification: value => {
+    set(() => ({ notification: value }))
+    setTimeout(() => set(() => ({ notification: { content: '', type: '' } })), 5000)
+  }
+}))
+
 export const useAnecdotes = () => useAnecdoteStore(useShallow((state) => filterResult(sortByVotes(state.anecdotes), state.filter)))
 export const useAnecdotesActions = () => useAnecdoteStore((state) => state.actions)
 export const useFilter = () => useAnecdoteStore(state => state.filter)
+export const useNotification = () => useNotificationStore(state => state.notification)
+export const setNotification = () => useNotificationStore(state => state.setNotification)
