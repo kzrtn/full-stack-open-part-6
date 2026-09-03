@@ -1,7 +1,6 @@
 import { useShallow } from 'zustand/react/shallow'
 import { create } from 'zustand'
 import anecdoteService from './services/anecdotes'
-import anecdotes from './services/anecdotes'
 
 const sortByVotes = (arr) => arr.toSorted((a, b) => b.votes - a.votes)
 const filterResult = (arr, filter) => arr.filter(
@@ -47,6 +46,8 @@ const useNotificationStore = create((set) => ({
     setTimeout(() => set(() => ({ notification: { content: '', type: '' } })), 3000)
   }
 }))
+
+export default useAnecdoteStore
 
 export const useAnecdotes = () => useAnecdoteStore(useShallow((state) => filterResult(sortByVotes(state.anecdotes), state.filter)))
 export const useAnecdotesActions = () => useAnecdoteStore((state) => state.actions)
