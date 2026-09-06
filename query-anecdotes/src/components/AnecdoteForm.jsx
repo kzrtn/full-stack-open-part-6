@@ -6,7 +6,7 @@ const AnecdoteForm = () => {
   const onCreate = (event) => {
     event.preventDefault()
     const content = event.target.anecdote.value
-    addAnecdote(content)
+    addAnecdote({ content, votes: 0 })
     event.target.reset()
   }
 
