@@ -6,7 +6,8 @@ export const useAnecdotes = () => {
 
   const result = useQuery({
     queryKey: ['anecdotes'],
-    queryFn: anecdoteService.getAnecdotes
+    queryFn: anecdoteService.getAnecdotes,
+    refetchOnWindowFocus: false
   })
 
   const addAnecdote = useMutation({
