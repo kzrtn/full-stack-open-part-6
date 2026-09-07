@@ -9,7 +9,6 @@ const AnecdoteForm = () => {
     event.preventDefault()
     const content = event.target.anecdote.value
     addAnecdote({ content, votes: 0 })
-    setNotification(`Added anecdote '${content}'`, 'success')
     event.target.reset()
   }
 
